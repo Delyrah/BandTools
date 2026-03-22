@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11527.330 d18.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BandTools", "BandTools.csproj", "{32CE4554-6DC2-1D56-960E-52860FA05E35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32CE4554-6DC2-1D56-960E-52860FA05E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32CE4554-6DC2-1D56-960E-52860FA05E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32CE4554-6DC2-1D56-960E-52860FA05E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32CE4554-6DC2-1D56-960E-52860FA05E35}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A57D63E-982F-4777-8D1B-6DC18840D8D2}
+	EndGlobalSection
+EndGlobal
