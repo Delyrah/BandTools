@@ -39,8 +39,10 @@ Problem("message")          // 500 with RFC 7807 problem details format
 
 Here are practical EF Core query examples using BandTools entities so everything is familiar.
 
-Basic Queries
-csharp// Get all bands — translated to SELECT * FROM Bands WHERE IsDeleted = 0
+## Basic Queries
+
+```csharp
+// Get all bands — translated to SELECT * FROM Bands WHERE IsDeleted = 0
 var bands = await db.Bands.ToListAsync();
 
 // Get one by id
@@ -54,9 +56,12 @@ var exists = await db.Bands.AnyAsync(b => b.Name == "Metallica");
 
 // Count
 var trackCount = await db.Tracks.CountAsync(t => t.BandId == 1);
+```
 
-Filtering
-csharp// Simple where
+## Filtering
+
+```csharp
+// Simple where
 var finishedTracks = await db.Tracks
     .Where(t => t.Status == TrackStatus.Finished)
     .ToListAsync();
@@ -81,9 +86,12 @@ var bands = await db.Bands
 var bands = await db.Bands
     .Where(b => b.Name.ToLower().Contains(searchTerm.ToLower()))
     .ToListAsync();
+```
 
-Ordering and Paging
-csharp// Order by single field
+## Ordering and Paging
+
+```csharp
+// Order by single field
 var tracks = await db.Tracks
     .OrderBy(t => t.Title)
     .ToListAsync();
@@ -108,10 +116,14 @@ var tracks = await db.Tracks
     .Skip((page - 1) * pageSize)   // skip previous pages
     .Take(pageSize)                 // take only this page
     .ToListAsync();
+```
 
-Loading Related Data (Joins)
+## Loading Related Data (Joins)
+
 EF handles joins through Include — you describe what to load, EF writes the JOIN:
-csharp// Load band with its members
+
+```csharp
+// Load band with its members
 var band = await db.Bands
     .Include(b => b.Members)
     .FirstOrDefaultAsync(b => b.Id == id);
@@ -131,10 +143,14 @@ var band = await db.Bands
             .ThenInclude(at => at.Track)
     .Include(b => b.Setlists)
     .FirstOrDefaultAsync(b => b.Id == id);
+```
 
-Filtered Includes
+## Filtered Includes
+
 New in EF Core 5 — filter what gets included rather than loading everything:
-csharp// Only include active band members
+
+```csharp
+// Only include active band members
 var band = await db.Bands
     .Include(b => b.Members.Where(bm => bm.LeaveDate == null))
         .ThenInclude(bm => bm.Member)
@@ -152,10 +168,14 @@ var album = await db.Albums
             .OrderBy(at => at.TrackNumber)
     })
     .FirstOrDefaultAsync(a => a.Id == id);
+```
 
-Projections with Select
+## Projections with Select
+
 Instead of loading full entities, project to only the fields you need. This is more efficient — EF generates a SELECT with only those columns:
-csharp// Project to an anonymous type
+
+```csharp
+// Project to an anonymous type
 var trackTitles = await db.Tracks
     .Where(t => t.BandId == 1)
     .Select(t => new { t.Id, t.Title, t.DurationSeconds })
@@ -192,10 +212,14 @@ var setlistDtos = await db.Setlists
             .ToList()
     })
     .ToListAsync();
+```
+
 This last pattern — projecting to DTOs directly in the query — is worth using over Include when you know exactly what shape you need. It produces leaner SQL and skips loading fields you'll never use.
 
-Aggregations
-csharp// Total duration of all tracks in a setlist in seconds
+## Aggregations
+
+```csharp
+// Total duration of all tracks in a setlist in seconds
 var totalDuration = await db.SetlistTracks
     .Where(st => st.SetlistId == 1)
     .SumAsync(st => st.Track.DurationSeconds ?? 0);
@@ -227,10 +251,14 @@ var popularTracks = await db.SetlistTracks
     .OrderByDescending(x => x.TimesPlayed)
     .Take(10)
     .ToListAsync();
+```
 
-Raw SQL for Complex Queries
+## Raw SQL for Complex Queries
+
 When EF's query translation isn't enough, you can drop to raw SQL while still getting entities back:
-csharp// Raw SQL that returns entities
+
+```csharp
+// Raw SQL that returns entities
 var tracks = await db.Tracks
     .FromSqlRaw("SELECT * FROM Tracks WHERE BPM BETWEEN {0} AND {1}", 80, 120)
     .ToListAsync();
@@ -241,9 +269,12 @@ var tracks = await db.Tracks
     .Where(t => t.Status == TrackStatus.Finished)
     .OrderBy(t => t.Title)
     .ToListAsync();
+```
 
-Tracking vs No Tracking
-csharp// Tracked — EF watches for changes, needed if you'll update the entity
+## Tracking vs No Tracking
+
+```csharp
+// Tracked — EF watches for changes, needed if you'll update the entity
 var band = await db.Bands.FirstOrDefaultAsync(b => b.Id == id);
 band.Name = "New Name";
 await db.SaveChangesAsync(); // EF knows band changed, generates UPDATE
@@ -261,10 +292,14 @@ var band = await db.Bands
     .Include(b => b.Albums)
     .AsSplitQuery()
     .FirstOrDefaultAsync(b => b.Id == id);
+```
 
-Explicit Loading
+## Explicit Loading
+
 Sometimes you want to load related data after the fact rather than upfront with Include:
-csharp// Load the band first
+
+```csharp
+// Load the band first
 var band = await db.Bands.FindAsync(id);
 
 // Then load its tracks only if needed
@@ -276,10 +311,14 @@ await db.Entry(band)
 await db.Entry(track)
     .Reference(t => t.Band)
     .LoadAsync();
+```
 
-A Key Mental Model
-EF queries are lazy by default — nothing hits the database until you materialise the query with ToListAsync(), FirstOrDefaultAsync(), AnyAsync() etc. Until then you're just building an expression tree:
-csharp// No database call yet — just building the query
+## A Key Mental Model
+
+EF queries are lazy by default — nothing hits the database until you materialise the query with `ToListAsync()`, `FirstOrDefaultAsync()`, `AnyAsync()` etc. Until then you're just building an expression tree:
+
+```csharp
+// No database call yet — just building the query
 var query = db.Tracks
     .Where(t => t.BandId == 1)
     .OrderBy(t => t.Title);
@@ -293,3 +332,4 @@ if (searchTerm != null)
 
 // NOW it hits the database — one query with all filters combined
 var tracks = await query.ToListAsync();
+```
