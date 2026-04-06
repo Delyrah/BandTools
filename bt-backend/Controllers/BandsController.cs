@@ -13,43 +13,38 @@ public class BandsController : BaseController
         _bandService = bandService;
     }
 
-    // GET api/bands
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken ct)
     {
         var result = await _bandService.GetAllAsync(ct);
-        return OkOrBadRequest(result);
+        if (!result.IsSuccess) return OkOrBadRequest(result);
+        return Ok(result.Value!.Select(b => b.ToDto()));
     }
 
-    // GET api/bands/5
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
     {
         var result = await _bandService.GetByIdAsync(id, ct);
-
-        if (!result.IsSuccess)
-            return NotFound(new { error = result.Error });
-
-        return Ok(result.Value);
+        if (!result.IsSuccess) return NotFound(new { error = result.Error });
+        return Ok(result.Value!.ToDto());
     }
 
-    // POST api/bands
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateBandDto dto, CancellationToken ct)
     {
         var result = await _bandService.CreateAsync(dto, ct);
-        return CreatedOrBadRequest(result, nameof(GetById), new { id = result.Value?.Id });
+        if (!result.IsSuccess) return BadRequest(new { error = result.Error });
+        return CreatedAtAction(nameof(GetById), new { id = result.Value!.Id }, result.Value!.ToDto());
     }
 
-    // PUT api/bands/5
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateBandDto dto, CancellationToken ct)
     {
         var result = await _bandService.UpdateAsync(id, dto, ct);
-        return OkOrBadRequest(result);
+        if (!result.IsSuccess) return OkOrBadRequest(result);
+        return Ok(result.Value!.ToDto());
     }
 
-    // DELETE api/bands/5
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {

@@ -1,6 +1,60 @@
+# BACK STAGE BRAIN
 User: bt-adm
 Pass: Kas&8d0m_126+
 
+## Ideas
+- gigs
+  - guest lists: send to band members to enter, download/print pdf
+- gear
+  - serial numbers: if something gets stolen, insurance/police
+- auto features
+  - standardized form to venue/promoter ~2 weeks before the show asking for load-in vs soundchack time, parking, backstage, rules, etc.
+  - gas & toll estimation
+  - hotel suggestions (maybe from other bands as well)
+- press kit
+- legal
+- mailing list
+- make it modern
+  - mobile first
+  - "kill the pdf" - no downloads, but live & responsive web links (with an option to download for the "old guys")
+  - "magic advance form": beautiful branded form for the promoter, auto populates the band calendar.
+  - real-time tour runway: 
+    - google maps to calc fuel costs, show best tank spots
+    - optional: profit per member with custom splits after cut/gas etc.
+    - payout: venmo/cashapp request to venue/treasurer
+    - write bills
+  - gear registry
+    - serial numbers, photos, value
+    - "stolen" button: generates a pre-formatted police report and "stolen gear" images
+  - setlist flow builder total runtime, feeling, "banter" gaps: auto build with ai analyzing the music
+  - flag songs as "fan favorites"
+  - import songs from other platforms (spotify)
+  - pre-save links
+  - ai assistant for open things
+    - "hey, band x asked if they could use your drumkit and wait for a response"
+  - merch
+  - donate buttons
+- tiers
+  - garage: 3 members, 5 setlists, 2 gigs/month, 10 gigs/year
+  - touring (10-20$): unlimited members, setlists & gigs, stripe connect for splitting merch/door money, advancing, ai features
+  - agency (100$): for managers handling multiple bands
+  - "on-ice" (2$): keep data stored, basic public info, but no 
+- stripe connect
+  - split sheets: gig payout splits ("van fund", manager, bandmembers)
+  - insta payouts
+- magic links (no account required)
+  - everything is online and not exported
+  - confirm button for stage hand when they received your stuff
+  - guest list bot: members get specific links to send to friends, so everyone knows who invited whom. auto close 2 hours before doors
+- stage planner
+  - draw your tech rider
+  - inputs/outputs list
+  - lists the most known gear & links to forums for any faults
+  - power & cable estimator, optimizer
+- advancing
+  - ckecklist bot auto sends links
+    - venue has not confirmed load-in/soundcheck times
+  - weather & traffic alerts ("heavy rain in XY")
 
 
 

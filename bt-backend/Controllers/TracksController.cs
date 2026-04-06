@@ -13,43 +13,38 @@ public class TracksController : BaseController
         _trackService = trackService;
     }
 
-    // GET api/tracks/5
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
     {
         var result = await _trackService.GetByIdAsync(id, ct);
-
-        if (!result.IsSuccess)
-            return NotFound(new { error = result.Error });
-
-        return Ok(result.Value);
+        if (!result.IsSuccess) return NotFound(new { error = result.Error });
+        return Ok(result.Value!.ToDto());
     }
 
-    // GET api/tracks/band/5
     [HttpGet("band/{bandId:int}")]
     public async Task<IActionResult> GetByBand(int bandId, CancellationToken ct)
     {
         var result = await _trackService.GetByBandAsync(bandId, ct);
-        return OkOrBadRequest(result);
+        if (!result.IsSuccess) return OkOrBadRequest(result);
+        return Ok(result.Value!.Select(t => t.ToDto()));
     }
 
-    // POST api/tracks
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTrackDto dto, CancellationToken ct)
     {
         var result = await _trackService.CreateAsync(dto, ct);
-        return CreatedOrBadRequest(result, nameof(GetById), new { id = result.Value?.Id });
+        if (!result.IsSuccess) return BadRequest(new { error = result.Error });
+        return CreatedAtAction(nameof(GetById), new { id = result.Value!.Id }, result.Value!.ToDto());
     }
 
-    // PUT api/tracks/5
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateTrackDto dto, CancellationToken ct)
     {
         var result = await _trackService.UpdateAsync(id, dto, ct);
-        return OkOrBadRequest(result);
+        if (!result.IsSuccess) return OkOrBadRequest(result);
+        return Ok(result.Value!.ToDto());
     }
 
-    // DELETE api/tracks/5
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {

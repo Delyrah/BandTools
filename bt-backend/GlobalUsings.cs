@@ -11,6 +11,7 @@ global using System.Security.Cryptography;
 global using System.Text;
 
 global using BandTools.Application.DTOs;
+global using BandTools.Application.Mapping;
 global using BandTools.Application.Services;
 global using BandTools.Application.Services.Common;
 global using BandTools.Domain.Entities;
