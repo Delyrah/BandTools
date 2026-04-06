@@ -1,0 +1,50 @@
+<div class="page">
+  <button (click)="onBack()" class="btn-back">← Back to Bands</button>
+
+  @if (loading()) {
+    <div class="loading-state">Loading...</div>
+  } @else if (!band()) {
+    <div class="empty-state">Band not found.</div>
+  } @else {
+
+    @if (error()) {
+      <div class="error-banner">{{ error() }}</div>
+    }
+
+    @if (isEditing()) {
+
+      <app-band-form
+        [band]="band()!"
+        [saving]="saving()"
+        (submitForm)="onEditSubmit($event)"
+        (cancel)="isEditing.set(false)" />
+
+    } @else {
+
+      <div class="band-detail">
+        <div class="band-detail-header">
+          @if (band()!.logoUrl) {
+            <img [src]="band()!.logoUrl" [alt]="band()!.name" class="band-logo-large" />
+          }
+          <div>
+            <h1>{{ band()!.name }}</h1>
+            @if (band()!.genre) { <p class="band-genre">{{ band()!.genre }}</p> }
+            @if (band()!.founded) { <p class="band-founded">Est. {{ band()!.founded }}</p> }
+          </div>
+          <div class="band-detail-actions">
+            <button (click)="isEditing.set(true)" class="btn-secondary">Edit</button>
+            <button (click)="onDelete()" class="btn-danger">Delete</button>
+          </div>
+        </div>
+
+        @if (band()!.bio) {
+          <p class="band-bio">{{ band()!.bio }}</p>
+        }
+
+        <app-band-member-list [members]="band()!.members" />
+      </div>
+
+    }
+
+  }
+</div>

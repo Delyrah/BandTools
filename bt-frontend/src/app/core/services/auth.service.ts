@@ -1,4 +1,5 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -9,6 +10,7 @@ import { AuthResponse, AuthUser, LoginDto, RegisterDto } from '../models/auth.mo
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private readonly ACCESS_TOKEN_KEY = 'access_token';
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
@@ -54,27 +56,32 @@ export class AuthService {
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem(this.ACCESS_TOKEN_KEY);
+    return this.isBrowser ? localStorage.getItem(this.ACCESS_TOKEN_KEY) : null;
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_TOKEN_KEY);
+    return this.isBrowser ? localStorage.getItem(this.REFRESH_TOKEN_KEY) : null;
   }
 
   private handleAuthResponse(response: AuthResponse) {
-    localStorage.setItem(this.ACCESS_TOKEN_KEY, response.accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+    if (this.isBrowser) {
+      localStorage.setItem(this.ACCESS_TOKEN_KEY, response.accessToken);
+      localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+    }
     this._currentUser.set(response.user);
   }
 
   private clearTokens() {
-    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    if (this.isBrowser) {
+      localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+      localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    }
   }
 
   // Parse the JWT payload to restore user on page refresh
   // JWT is three base64 segments separated by dots — the middle one is the payload
   private loadUserFromToken(): AuthUser | null {
+    if (!this.isBrowser) return null;
     const token = localStorage.getItem(this.ACCESS_TOKEN_KEY);
     if (!token) return null;
 

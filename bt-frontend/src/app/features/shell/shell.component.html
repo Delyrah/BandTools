@@ -1,0 +1,24 @@
+<div class="app-layout">
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <h2>BandTools</h2>
+      <span class="user-name">{{ authService.currentUser()?.displayName }}</span>
+    </div>
+
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/bands" routerLinkActive="active">
+          🎸 Bands
+        </a>
+      </li>
+    </ul>
+
+    <button (click)="authService.logout()" class="btn-logout">
+      Sign out
+    </button>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

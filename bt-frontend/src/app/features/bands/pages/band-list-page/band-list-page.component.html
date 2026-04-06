@@ -1,0 +1,39 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Bands</h1>
+    <button (click)="showCreateForm.set(true)" [disabled]="showCreateForm()">
+      + New Band
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+  }
+
+  @if (showCreateForm()) {
+    <div class="form-panel">
+      <app-band-form
+        [saving]="saving()"
+        (submitForm)="onCreateSubmit($any($event))"
+        (cancel)="onCreateCancel()" />
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">Loading bands...</div>
+  } @else if (bands().length === 0) {
+    <div class="empty-state">
+      <p>No bands yet.</p>
+      <button (click)="showCreateForm.set(true)">Create your first band</button>
+    </div>
+  } @else {
+    <div class="band-grid">
+      @for (band of bands(); track band.id) {
+        <app-band-card
+          [band]="band"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)" />
+      }
+    </div>
+  }
+</div>

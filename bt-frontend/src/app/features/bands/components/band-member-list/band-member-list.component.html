@@ -1,0 +1,36 @@
+<div class="member-list">
+  <h3>Members</h3>
+
+  @if (members().length === 0) {
+    <p class="empty-state">No members yet.</p>
+  }
+
+  @for (member of members(); track member.memberId) {
+    <div class="member-item" [class.inactive]="!member.isActive">
+      @if (member.avatarUrl) {
+        <img [src]="member.avatarUrl" [alt]="member.name" class="member-avatar" />
+      } @else {
+        <div class="member-avatar-placeholder">
+          {{ member.name.charAt(0).toUpperCase() }}
+        </div>
+      }
+
+      <div class="member-info">
+        <span class="member-name">{{ member.name }}</span>
+
+        @if (member.role) {
+          <span class="member-role">{{ member.role }}</span>
+        }
+
+        <span class="member-dates">
+          @if (member.joinDate) { Joined {{ member.joinDate }} }
+          @if (!member.isActive && member.leaveDate) { · Left {{ member.leaveDate }} }
+        </span>
+      </div>
+
+      @if (!member.isActive) {
+        <span class="badge-inactive">Alumni</span>
+      }
+    </div>
+  }
+</div>

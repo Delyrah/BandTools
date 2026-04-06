@@ -1,0 +1,47 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>{{ isEditMode ? 'Edit Band' : 'New Band' }}</h2>
+
+  <div class="field">
+    <label for="name">Name *</label>
+    <input id="name" type="text" formControlName="name" placeholder="Band name" />
+    @if (name.touched && name.hasError('required')) {
+      <span class="field-error">Name is required</span>
+    }
+    @if (name.touched && name.hasError('maxlength')) {
+      <span class="field-error">Name cannot exceed 100 characters</span>
+    }
+  </div>
+
+  <div class="field">
+    <label for="genre">Genre</label>
+    <input id="genre" type="text" formControlName="genre" placeholder="e.g. Metal, Jazz" />
+    @if (genre.touched && genre.hasError('maxlength')) {
+      <span class="field-error">Genre cannot exceed 50 characters</span>
+    }
+  </div>
+
+  <div class="field">
+    <label for="founded">Founded</label>
+    <input id="founded" type="date" formControlName="founded" />
+  </div>
+
+  <div class="field">
+    <label for="bio">Bio</label>
+    <textarea id="bio" formControlName="bio" rows="4" placeholder="Band biography..."></textarea>
+    @if (bio.touched && bio.hasError('maxlength')) {
+      <span class="field-error">Bio cannot exceed 1000 characters</span>
+    }
+  </div>
+
+  <div class="field">
+    <label for="logoUrl">Logo URL</label>
+    <input id="logoUrl" type="url" formControlName="logoUrl" placeholder="https://..." />
+  </div>
+
+  <div class="form-actions">
+    <button type="button" (click)="cancel.emit()" class="btn-secondary">Cancel</button>
+    <button type="submit" [disabled]="saving()">
+      {{ saving() ? 'Saving...' : isEditMode ? 'Save Changes' : 'Create Band' }}
+    </button>
+  </div>
+</form>

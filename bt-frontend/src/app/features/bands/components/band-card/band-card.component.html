@@ -1,0 +1,30 @@
+<div class="band-card">
+  @if (band().logoUrl) {
+    <img [src]="band().logoUrl" [alt]="band().name + ' logo'" class="band-logo" />
+  } @else {
+    <div class="band-logo-placeholder">
+      {{ band().name.charAt(0).toUpperCase() }}
+    </div>
+  }
+
+  <div class="band-info">
+    <h3>{{ band().name }}</h3>
+
+    @if (band().genre) {
+      <span class="band-genre">{{ band().genre }}</span>
+    }
+
+    @if (band().founded) {
+      <span class="band-founded">Est. {{ band().founded }}</span>
+    }
+
+    <span class="band-members">
+      {{ band().members.length }} member{{ band().members.length !== 1 ? 's' : '' }}
+    </span>
+  </div>
+
+  <div class="band-actions">
+    <button (click)="edit.emit(band().id)" class="btn-secondary">Edit</button>
+    <button (click)="delete.emit(band().id)" class="btn-danger">Delete</button>
+  </div>
+</div>
