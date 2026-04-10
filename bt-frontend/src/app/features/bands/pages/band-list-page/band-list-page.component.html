@@ -1,7 +1,7 @@
 <div class="page">
   <div class="page-header">
     <h1>Bands</h1>
-    <button (click)="showCreateForm.set(true)" [disabled]="showCreateForm()">
+    <button mat-raised-button color="primary" (click)="showCreateForm.set(true)" [disabled]="showCreateForm()">
       + New Band
     </button>
   </div>
@@ -20,11 +20,14 @@
   }
 
   @if (loading()) {
-    <div class="loading-state">Loading bands...</div>
+    <div class="loading-state">
+      <mat-spinner diameter="40" />
+      <span>Loading bands...</span>
+    </div>
   } @else if (bands().length === 0) {
     <div class="empty-state">
       <p>No bands yet.</p>
-      <button (click)="showCreateForm.set(true)">Create your first band</button>
+      <button mat-raised-button color="primary" (click)="showCreateForm.set(true)">Create your first band</button>
     </div>
   } @else {
     <div class="band-grid">

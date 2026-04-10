@@ -1,13 +1,17 @@
 import { Component, inject, input, output, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { Band } from '../../../../core/models/band.model';
 import { CreateBandDto, UpdateBandDto } from '../../../../core/services/band.service';
 
 @Component({
   standalone: true,
   selector: 'app-band-form',
-  imports: [ReactiveFormsModule],
-  templateUrl: './band-form.component.html'
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  templateUrl: './band-form.component.html',
+  styleUrl: './band-form.component.scss'
 })
 export class BandFormComponent implements OnInit {
   private fb = inject(FormBuilder);

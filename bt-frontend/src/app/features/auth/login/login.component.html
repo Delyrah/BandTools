@@ -1,52 +1,44 @@
 <div class="auth-container">
-  <div class="auth-card">
-    <h1>BandTools</h1>
-    <h2>Sign in</h2>
+  <mat-card class="auth-card">
+    <mat-card-content>
+      <p class="auth-title">BandTools</p>
+      <p class="auth-subtitle">Sign in</p>
 
-    @if (error()) {
-      <div class="error-banner">{{ error() }}</div>
-    }
+      @if (error()) {
+        <div class="error-banner">{{ error() }}</div>
+      }
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-      <div class="field">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="you@example.com"
-          autocomplete="email" />
-        @if (email.touched && email.hasError('required')) {
-          <span class="field-error">Email is required</span>
-        }
-        @if (email.touched && email.hasError('email')) {
-          <span class="field-error">Enter a valid email address</span>
-        }
-      </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="you@example.com" autocomplete="email" />
+          @if (email.hasError('required')) {
+            <mat-error>Email is required</mat-error>
+          }
+          @if (email.hasError('email')) {
+            <mat-error>Enter a valid email address</mat-error>
+          }
+        </mat-form-field>
 
-      <div class="field">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="••••••••"
-          autocomplete="current-password" />
-        @if (password.touched && password.hasError('required')) {
-          <span class="field-error">Password is required</span>
-        }
-        @if (password.touched && password.hasError('minlength')) {
-          <span class="field-error">Password must be at least 8 characters</span>
-        }
-      </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="••••••••" autocomplete="current-password" />
+          @if (password.hasError('required')) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (password.hasError('minlength')) {
+            <mat-error>Password must be at least 8 characters</mat-error>
+          }
+        </mat-form-field>
 
-      <button type="submit" [disabled]="loading()">
-        {{ loading() ? 'Signing in...' : 'Sign in' }}
-      </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading()" class="full-width">
+          {{ loading() ? 'Signing in...' : 'Sign in' }}
+        </button>
 
-    </form>
+      </form>
 
-    <p>Don't have an account? <a routerLink="/register">Register</a></p>
-  </div>
+      <p class="form-footer">Don't have an account? <a routerLink="/register">Register</a></p>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -1,36 +1,34 @@
-<div class="member-list">
-  <h3>Members</h3>
+<h3 class="section-title">Members</h3>
 
-  @if (members().length === 0) {
-    <p class="empty-state">No members yet.</p>
-  }
+@if (members().length === 0) {
+  <p class="empty-state">No members yet.</p>
+}
 
+<mat-list>
   @for (member of members(); track member.memberId) {
-    <div class="member-item" [class.inactive]="!member.isActive">
-      @if (member.avatarUrl) {
-        <img [src]="member.avatarUrl" [alt]="member.name" class="member-avatar" />
-      } @else {
-        <div class="member-avatar-placeholder">
-          {{ member.name.charAt(0).toUpperCase() }}
-        </div>
+    <mat-list-item [class.inactive]="!member.isActive">
+      <span matListItemAvatar>
+        @if (member.avatarUrl) {
+          <img [src]="member.avatarUrl" [alt]="member.name" class="member-avatar" />
+        } @else {
+          <div class="member-avatar-placeholder">{{ member.name.charAt(0).toUpperCase() }}</div>
+        }
+      </span>
+
+      <span matListItemTitle>{{ member.name }}</span>
+
+      @if (member.role) {
+        <span matListItemLine class="member-role">{{ member.role }}</span>
       }
 
-      <div class="member-info">
-        <span class="member-name">{{ member.name }}</span>
-
-        @if (member.role) {
-          <span class="member-role">{{ member.role }}</span>
-        }
-
-        <span class="member-dates">
-          @if (member.joinDate) { Joined {{ member.joinDate }} }
-          @if (!member.isActive && member.leaveDate) { · Left {{ member.leaveDate }} }
-        </span>
-      </div>
+      <span matListItemLine>
+        @if (member.joinDate) { Joined {{ member.joinDate }} }
+        @if (!member.isActive && member.leaveDate) { · Left {{ member.leaveDate }} }
+      </span>
 
       @if (!member.isActive) {
-        <span class="badge-inactive">Alumni</span>
+        <span matListItemMeta class="badge-inactive">Alumni</span>
       }
-    </div>
+    </mat-list-item>
   }
-</div>
+</mat-list>

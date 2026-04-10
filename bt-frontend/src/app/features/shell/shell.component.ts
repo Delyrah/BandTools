@@ -1,12 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatNavList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   standalone: true,
   selector: 'app-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './shell.component.html'
+  imports: [
+    RouterOutlet, RouterLink, RouterLinkActive,
+    MatSidenavModule, MatToolbarModule, MatNavList, MatListItem,
+    MatListItemIcon, MatListItemTitle, MatIconModule, MatButtonModule,
+  ],
+  templateUrl: './shell.component.html',
+  styleUrl: './shell.component.scss'
 })
 export class ShellComponent {
   authService = inject(AuthService);

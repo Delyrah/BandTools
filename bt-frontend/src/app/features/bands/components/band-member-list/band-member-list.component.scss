@@ -1,0 +1,47 @@
+.section-title {
+  font: var(--mat-sys-title-medium);
+  margin: 0 0 8px;
+}
+
+.empty-state {
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-medium);
+  padding: 8px 0;
+}
+
+.member-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.member-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--mat-sys-title-small);
+}
+
+.member-role {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.badge-inactive {
+  font: var(--mat-sys-label-small);
+  background: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: auto;
+}
+
+.inactive {
+  opacity: 0.6;
+}

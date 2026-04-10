@@ -1,0 +1,35 @@
+.band-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.band-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.band-logo-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--mat-sys-title-large);
+}
+
+.band-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+mat-card-actions {
+  margin-top: auto;
+}

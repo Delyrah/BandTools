@@ -1,8 +1,13 @@
 <div class="page">
-  <button (click)="onBack()" class="btn-back">← Back to Bands</button>
+  <button mat-button (click)="onBack()">
+    <mat-icon>arrow_back</mat-icon>
+    Back to Bands
+  </button>
 
   @if (loading()) {
-    <div class="loading-state">Loading...</div>
+    <div class="loading-state">
+      <mat-spinner diameter="40" />
+    </div>
   } @else if (!band()) {
     <div class="empty-state">Band not found.</div>
   } @else {
@@ -21,28 +26,26 @@
 
     } @else {
 
-      <div class="band-detail">
-        <div class="band-detail-header">
-          @if (band()!.logoUrl) {
-            <img [src]="band()!.logoUrl" [alt]="band()!.name" class="band-logo-large" />
-          }
-          <div>
-            <h1>{{ band()!.name }}</h1>
-            @if (band()!.genre) { <p class="band-genre">{{ band()!.genre }}</p> }
-            @if (band()!.founded) { <p class="band-founded">Est. {{ band()!.founded }}</p> }
-          </div>
-          <div class="band-detail-actions">
-            <button (click)="isEditing.set(true)" class="btn-secondary">Edit</button>
-            <button (click)="onDelete()" class="btn-danger">Delete</button>
-          </div>
-        </div>
-
-        @if (band()!.bio) {
-          <p class="band-bio">{{ band()!.bio }}</p>
+      <div class="band-detail-header">
+        @if (band()!.logoUrl) {
+          <img [src]="band()!.logoUrl" [alt]="band()!.name" class="band-logo-large" />
         }
-
-        <app-band-member-list [members]="band()!.members" />
+        <div class="band-header-info">
+          <h1>{{ band()!.name }}</h1>
+          @if (band()!.genre) { <p class="band-genre">{{ band()!.genre }}</p> }
+          @if (band()!.founded) { <p class="band-founded">Est. {{ band()!.founded }}</p> }
+        </div>
+        <div class="band-detail-actions">
+          <button mat-stroked-button (click)="isEditing.set(true)">Edit</button>
+          <button mat-stroked-button color="warn" (click)="onDelete()">Delete</button>
+        </div>
       </div>
+
+      @if (band()!.bio) {
+        <p class="band-bio">{{ band()!.bio }}</p>
+      }
+
+      <app-band-member-list [members]="band()!.members" />
 
     }
 

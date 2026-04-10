@@ -1,6 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../core/services/auth.service';
 
 // Custom validator — checks that password and confirmPassword match
@@ -13,8 +17,9 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 @Component({
   standalone: true,
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './register.component.html'
+  imports: [ReactiveFormsModule, RouterLink, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   private fb = inject(FormBuilder);

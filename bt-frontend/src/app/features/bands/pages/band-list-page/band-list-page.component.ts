@@ -3,6 +3,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BandCardComponent } from '../../components/band-card/band-card.component';
 import { BandFormComponent } from '../../components/band-form/band-form.component';
 import { BandActions } from '../../../../store/band/band.actions';
@@ -17,8 +19,9 @@ import { CreateBandDto } from '../../../../core/services/band.service';
 @Component({
   standalone: true,
   selector: 'app-band-list-page',
-  imports: [BandCardComponent, BandFormComponent],
-  templateUrl: './band-list-page.component.html'
+  imports: [BandCardComponent, BandFormComponent, MatButtonModule, MatProgressSpinnerModule],
+  templateUrl: './band-list-page.component.html',
+  styleUrl: './band-list-page.component.scss'
 })
 export class BandListPageComponent implements OnInit {
   private store = inject(Store);

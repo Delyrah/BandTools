@@ -1,0 +1,15 @@
+.form-title {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
