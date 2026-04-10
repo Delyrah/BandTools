@@ -72,7 +72,8 @@
               "buildTarget": "bt-frontend:build:production"
             },
             "development": {
-              "buildTarget": "bt-frontend:build:development"
+              "buildTarget": "bt-frontend:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

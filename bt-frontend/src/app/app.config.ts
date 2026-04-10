@@ -8,16 +8,17 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 // ngrx
 import { AlbumEffects } from './store/album/album.effects';
 import { albumFeature } from './store/album/album.reducer';
-import { BandEffects } from './store/bands/band.effects';
-import { bandFeature } from './store/bands/band.reducer';
+import { BandEffects } from './store/band/band.effects';
+import { bandFeature } from './store/band/band.reducer';
 import { SetlistEffects } from './store/setlist/setlist.effects';
 import { setlistFeature } from './store/setlist/setlist.reducer';
-import { TrackEffects } from './store/tracks/track.effects';
-import { trackFeature } from './store/tracks/track.reducer';
+import { TrackEffects } from './store/track/track.effects';
+import { trackFeature } from './store/track/track.reducer';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
             routes,
             withComponentInputBinding()
         ),
-        provideHttpClient(withInterceptors([authInterceptor])),
+        provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
         provideClientHydration(withEventReplay()),
         provideStore({
             [albumFeature.name]: albumFeature.reducer,

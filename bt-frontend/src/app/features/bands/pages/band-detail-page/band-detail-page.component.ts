@@ -6,13 +6,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Band } from '../../../../core/models/band.model';
 import { BandFormComponent } from '../../components/band-form/band-form.component';
 import { BandMemberListComponent } from '../../components/band-member-list/band-member-list.component';
-import { BandActions } from '../../../../store/bands/band.actions';
+import { BandActions } from '../../../../store/band/band.actions';
 import {
   selectBandEntities,
   selectLoading,
   selectSaving,
   selectError
-} from '../../../../store/bands/band.selectors';
+} from '../../../../store/band/band.selectors';
 import { UpdateBandDto } from '../../../../core/services/band.service';
 
 @Component({

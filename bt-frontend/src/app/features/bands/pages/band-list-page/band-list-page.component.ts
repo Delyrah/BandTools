@@ -5,13 +5,13 @@ import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BandCardComponent } from '../../components/band-card/band-card.component';
 import { BandFormComponent } from '../../components/band-form/band-form.component';
-import { BandActions } from '../../../../store/bands/band.actions';
+import { BandActions } from '../../../../store/band/band.actions';
 import {
   selectAllBands,
   selectLoading,
   selectSaving,
   selectError
-} from '../../../../store/bands/band.selectors';
+} from '../../../../store/band/band.selectors';
 import { CreateBandDto } from '../../../../core/services/band.service';
 
 @Component({

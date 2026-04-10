@@ -1,5 +1,5 @@
-import { BandState } from './bands/band.state';
-import { TrackState } from './tracks/track.state';
+import { BandState } from './band/band.state';
+import { TrackState } from './track/track.state';
 import { AlbumState } from './album/album.state';
 import { SetlistState } from './setlist/setlist.state';
 
