@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GearListPage } from './gear-list-page.component';
+import { GearListPageComponent } from './gear-list-page.component';
 
-describe('GearListPage', () => {
-  let component: GearListPage;
-  let fixture: ComponentFixture<GearListPage>;
+describe('GearListPageComponent', () => {
+  let component: GearListPageComponent;
+  let fixture: ComponentFixture<GearListPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GearListPage],
+      imports: [GearListPageComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GearListPage);
+    fixture = TestBed.createComponent(GearListPageComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

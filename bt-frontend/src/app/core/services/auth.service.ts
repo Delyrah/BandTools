@@ -15,17 +15,15 @@ export class AuthService {
   private readonly ACCESS_TOKEN_KEY = 'access_token';
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
 
-  // Signal holding the current user — null means not logged in
+  private _persistSession = signal(false);
   private _currentUser = signal<AuthUser | null>(this.loadUserFromToken());
 
-  // Public read-only access to the current user
   currentUser = this._currentUser.asReadonly();
-
-  // Computed signals derived from currentUser
   isLoggedIn = computed(() => this._currentUser() !== null);
   isAdmin = computed(() => this._currentUser()?.role === 'Admin');
 
-  login(dto: LoginDto) {
+  login(dto: LoginDto, staySignedIn: boolean) {
+    this._persistSession.set(staySignedIn);
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, dto)
       .pipe(tap(response => this.handleAuthResponse(response)));
   }
@@ -43,30 +41,37 @@ export class AuthService {
 
   logout() {
     const refreshToken = this.getRefreshToken();
-
-    // Revoke on the server — fire and forget, don't wait for response
     if (refreshToken) {
       this.http.post(`${environment.apiUrl}/auth/revoke`, refreshToken)
-        .subscribe({ error: () => { } }); // swallow errors — we're logging out anyway
+        .subscribe({ error: () => { } });
     }
-
     this.clearTokens();
     this._currentUser.set(null);
     this.router.navigate(['/login']);
   }
 
   getAccessToken(): string | null {
-    return this.isBrowser ? localStorage.getItem(this.ACCESS_TOKEN_KEY) : null;
+    if (!this.isBrowser) return null;
+    return this._persistSession()
+      ? localStorage.getItem(this.ACCESS_TOKEN_KEY)
+      : sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
   }
 
   getRefreshToken(): string | null {
-    return this.isBrowser ? localStorage.getItem(this.REFRESH_TOKEN_KEY) : null;
+    if (!this.isBrowser) return null;
+    return this._persistSession()
+      ? localStorage.getItem(this.REFRESH_TOKEN_KEY)
+      : sessionStorage.getItem(this.REFRESH_TOKEN_KEY);
+  }
+
+  private get storage(): Storage {
+    return this._persistSession() ? localStorage : sessionStorage;
   }
 
   private handleAuthResponse(response: AuthResponse) {
     if (this.isBrowser) {
-      localStorage.setItem(this.ACCESS_TOKEN_KEY, response.accessToken);
-      localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+      this.storage.setItem(this.ACCESS_TOKEN_KEY, response.accessToken);
+      this.storage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
     }
     this._currentUser.set(response.user);
   }
@@ -75,15 +80,24 @@ export class AuthService {
     if (this.isBrowser) {
       localStorage.removeItem(this.ACCESS_TOKEN_KEY);
       localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+      sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
+      sessionStorage.removeItem(this.REFRESH_TOKEN_KEY);
     }
   }
 
-  // Parse the JWT payload to restore user on page refresh
-  // JWT is three base64 segments separated by dots — the middle one is the payload
   private loadUserFromToken(): AuthUser | null {
     if (!this.isBrowser) return null;
-    const token = localStorage.getItem(this.ACCESS_TOKEN_KEY);
+
+    const token =
+      localStorage.getItem(this.ACCESS_TOKEN_KEY) ??
+      sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
+
     if (!token) return null;
+
+    // Restore persist flag based on where the token was found
+    if (localStorage.getItem(this.ACCESS_TOKEN_KEY)) {
+      this._persistSession.set(true);
+    }
 
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
