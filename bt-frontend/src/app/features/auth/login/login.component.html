@@ -32,6 +32,10 @@
           }
         </mat-form-field>
 
+        <mat-checkbox formControlName="staySignedIn" class="stay-signed-in">
+          Stay signed in
+        </mat-checkbox>
+
         <button mat-raised-button color="primary" type="submit" [disabled]="loading()" class="full-width">
           {{ loading() ? 'Signing in...' : 'Sign in' }}
         </button>
