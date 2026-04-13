@@ -52,16 +52,12 @@ export class AuthService {
 
   getAccessToken(): string | null {
     if (!this.isBrowser) return null;
-    return this._persistSession()
-      ? localStorage.getItem(this.ACCESS_TOKEN_KEY)
-      : sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
+    return this.storage.getItem(this.ACCESS_TOKEN_KEY);
   }
 
   getRefreshToken(): string | null {
     if (!this.isBrowser) return null;
-    return this._persistSession()
-      ? localStorage.getItem(this.REFRESH_TOKEN_KEY)
-      : sessionStorage.getItem(this.REFRESH_TOKEN_KEY);
+    return this.storage.getItem(this.REFRESH_TOKEN_KEY);
   }
 
   private get storage(): Storage {
@@ -88,16 +84,12 @@ export class AuthService {
   private loadUserFromToken(): AuthUser | null {
     if (!this.isBrowser) return null;
 
-    const token =
-      localStorage.getItem(this.ACCESS_TOKEN_KEY) ??
-      sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
-
-    if (!token) return null;
-
-    // Restore persist flag based on where the token was found
-    if (localStorage.getItem(this.ACCESS_TOKEN_KEY)) {
+    const localToken = localStorage.getItem(this.ACCESS_TOKEN_KEY);
+    if (localToken) {
       this._persistSession.set(true);
     }
+    const token = localToken ?? sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
+    if (!token) return null;
 
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
