@@ -32,6 +32,16 @@ export const routes: Routes = [
                     .then(m => m.BandDetailPageComponent)
             },
             {
+                path: 'gear',
+                loadComponent: () => import('./features/gear/pages/gear-list-page/gear-list-page.component')
+                    .then(m => m.GearListPageComponent)
+            },
+            {
+                path: 'gear/:id',
+                loadComponent: () => import('./features/gear/pages/gear-detail-page/gear-detail-page.component')
+                    .then(m => m.GearDetailPageComponent)
+            },
+            {
                 path: '',
                 redirectTo: 'bands',
                 pathMatch: 'full'
