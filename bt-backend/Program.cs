@@ -77,7 +77,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("BandToolsPolicy");       // before auth
+app.UseCors("BandToolsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
