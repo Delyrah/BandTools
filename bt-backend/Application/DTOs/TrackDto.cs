@@ -15,7 +15,6 @@ public class TrackDto
     public TrackStatus Status { get; set; }
 }
 
-// DTOs/Track/CreateTrackDto.cs
 public class CreateTrackDto
 {
     [Required]
@@ -39,7 +38,6 @@ public class CreateTrackDto
     public TrackStatus Status { get; set; } = TrackStatus.Demo;
 }
 
-// DTOs/Track/UpdateTrackDto.cs
 public class UpdateTrackDto
 {
     [MaxLength(200)]

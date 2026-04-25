@@ -21,6 +21,8 @@ import { TrackEffects } from './store/track/track.effects';
 import { trackFeature } from './store/track/track.reducer';
 import { notificationFeature } from './store/notification/notification.reducer';
 import { NotificationEffects } from './store/notification/notification.effects';
+import { gearFeature } from './store/gear/gear.reducer';
+import { GearEffects } from './store/gear/gear.effects';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -36,12 +38,14 @@ export const appConfig: ApplicationConfig = {
         provideStore(),
         provideState(albumFeature),
         provideState(bandFeature),
+        provideState(gearFeature),
         provideState(notificationFeature),
         provideState(setlistFeature),
         provideState(trackFeature),
         provideEffects([
             AlbumEffects,
             BandEffects,
+            GearEffects,
             NotificationEffects,
             SetlistEffects,
             TrackEffects

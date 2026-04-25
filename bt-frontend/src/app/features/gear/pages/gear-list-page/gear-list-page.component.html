@@ -1,4 +1,5 @@
-<p>gear-list-page works!</p>
+<p>gear-list-page works ?!</p>
+<h2>{{gear()?.length}} items</h2>
 @for (item of gear(); track item.id) {
-
+    <div>{{ item.name }}</div>
 }

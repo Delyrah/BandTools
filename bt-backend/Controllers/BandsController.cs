@@ -32,6 +32,7 @@ public class BandsController : BaseController
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateBandDto dto, CancellationToken ct)
     {
+        
         var result = await _bandService.CreateAsync(dto, ct);
         if (!result.IsSuccess) return BadRequest(new { error = result.Error });
         return CreatedAtAction(nameof(GetById), new { id = result.Value!.Id }, result.Value!.ToDto());

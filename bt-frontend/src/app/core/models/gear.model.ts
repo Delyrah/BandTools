@@ -1,19 +1,23 @@
 export interface Gear {
     id: number;
     bandId: number;
+    ownerId?: number;
     name: string;
+
     type?: string;
     brand?: string;
     model?: string;
     serialNumber?: string;
-    value?: number;
+
     photoUrl?: string;
+    
     notes?: string;
-    ownerId?: number;
+
+    value?: number;
+    valueCurrency?: string;
     weight?: number;
     weightUnit?: string;
     dimensions?: string;
-    dimensionsUnit?: string;
 }
 
 interface BaseGearDto extends Omit<Gear, 'id'> { }

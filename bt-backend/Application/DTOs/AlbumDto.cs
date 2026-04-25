@@ -2,7 +2,6 @@
 
 namespace BandTools.Application.DTOs;
 
-// DTOs/Album/AlbumDto.cs
 public class AlbumDto
 {
     public int Id { get; set; }
@@ -15,7 +14,6 @@ public class AlbumDto
     public List<AlbumTrackDto> Tracks { get; set; } = [];
 }
 
-// DTOs/Album/CreateAlbumDto.cs
 public class CreateAlbumDto
 {
     [Required]
@@ -33,7 +31,6 @@ public class CreateAlbumDto
     public string? Description { get; set; }
 }
 
-// DTOs/Album/UpdateAlbumDto.cs
 public class UpdateAlbumDto
 {
     [MaxLength(200)]

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace BandTools.Application.DTOs;
-// DTOs/Setlist/SetlistDto.cs
+
 public class SetlistDto
 {
     public int Id { get; set; }
@@ -14,7 +14,6 @@ public class SetlistDto
     public List<SetlistTrackDto> Tracks { get; set; } = [];
 }
 
-// DTOs/Setlist/CreateSetlistDto.cs
 public class CreateSetlistDto
 {
     [Required]
@@ -35,7 +34,6 @@ public class CreateSetlistDto
     public SetlistStatus Status { get; set; } = SetlistStatus.Draft;
 }
 
-// DTOs/Setlist/UpdateSetlistDto.cs
 public class UpdateSetlistDto
 {
     [MaxLength(200)]

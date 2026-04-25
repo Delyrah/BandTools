@@ -1,6 +1,5 @@
 ﻿namespace BandTools.Application.DTOs;
 
-// DTOs/Auth/RegisterDto.cs
 public class RegisterDto
 {
     [Required]
@@ -16,7 +15,6 @@ public class RegisterDto
     public string DisplayName { get; set; } = null!;
 }
 
-// DTOs/Auth/LoginDto.cs
 public class LoginDto
 {
     [Required]
@@ -27,7 +25,6 @@ public class LoginDto
     public string Password { get; set; } = null!;
 }
 
-// DTOs/Auth/AuthResponseDto.cs
 public class AuthResponseDto
 {
     public string AccessToken { get; set; } = null!;
@@ -36,7 +33,6 @@ public class AuthResponseDto
     public UserDto User { get; set; } = null!;
 }
 
-// DTOs/Auth/UserDto.cs
 public class UserDto
 {
     public int Id { get; set; }

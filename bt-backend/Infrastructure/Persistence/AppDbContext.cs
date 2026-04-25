@@ -10,8 +10,10 @@ namespace BandTools.Infrastructure.Persistence
 
         // Constructor — EF Core injects the options (connection string, provider etc.)
         // ICurrentUserService is our own service that tells us who is logged in
-        public AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUserService currentUser)
-            : base(options)
+        public AppDbContext(
+            DbContextOptions<AppDbContext> options, 
+            ICurrentUserService currentUser
+        ) : base(options)
         {
             _currentUser = currentUser;
         }
@@ -31,6 +33,7 @@ namespace BandTools.Infrastructure.Persistence
         public DbSet<Setlist> Setlists => Set<Setlist>();
         public DbSet<SetlistTrack> SetlistTracks => Set<SetlistTrack>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        public DbSet<Gear> Gear => Set<Gear>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,6 +54,7 @@ namespace BandTools.Infrastructure.Persistence
             builder.Entity<Setlist>().HasQueryFilter(e => !e.IsDeleted);
             builder.Entity<SetlistTrack>().HasQueryFilter(e => !e.IsDeleted);
             builder.Entity<RefreshToken>().HasQueryFilter(e => !e.IsDeleted);
+            builder.Entity<Gear>().HasQueryFilter(e => !e.IsDeleted);
 
             // --- Delete Behavior ---
             // By default EF Core sets up CASCADE deletes on required relationships,
@@ -91,6 +95,8 @@ namespace BandTools.Infrastructure.Persistence
             var userId = _currentUser.UserId;
             var now = DateTime.UtcNow;
 
+            await SetSessionContext();
+
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
                 // ChangeTracker knows the state of every entity EF is tracking.
@@ -122,5 +128,13 @@ namespace BandTools.Infrastructure.Persistence
 
             return await base.SaveChangesAsync(ct);
         }
+
+        private async Task SetSessionContext()
+        {
+            await Database.ExecuteSqlRawAsync(
+                "EXEC sp_set_session_context @key = N'UserId', @value = {0}",
+                _currentUser.UserId);
+        }
+
     }
 }

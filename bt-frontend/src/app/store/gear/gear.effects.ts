@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { GearService } from "../../core/services/gear.service";
 import { Router } from "@angular/router";
 import { GearActions } from "./gear.actions";
-import rx, { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
+import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
 
 @Injectable()
 export class GearEffects {
@@ -16,7 +16,7 @@ export class GearEffects {
             ofType(GearActions.loadAllGear),
             switchMap(() => 
                 this.gearService.getAll().pipe(
-                    rx.map(gear => GearActions.loadAllGearSuccess({ gear })),
+                    map(gear => GearActions.loadAllGearSuccess({ gear })),
                     catchError(error => of(GearActions.loadAllGearFailure({
                         error: error.message ?? 'Failed to load all gear'
                     })))
