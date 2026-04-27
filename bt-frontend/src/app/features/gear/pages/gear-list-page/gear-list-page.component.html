@@ -1,5 +1,51 @@
-<p>gear-list-page works ?!</p>
-<h2>{{gear()?.length}} items</h2>
-@for (item of gear(); track item.id) {
-    <div>{{ item.name }}</div>
-}
+<div class="page">
+  <div class="page-header">
+    <h1>Gear</h1>
+    <button mat-raised-button color="primary" (click)="showCreateForm.set(true)" [disabled]="showCreateForm()">
+      + New Gear
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+  }
+
+  @if (!band()) {
+    <div class="error-banner">No band selected</div>
+  } @else {
+    @if (showCreateForm() && !!band()) {
+      <div class="form-panel">
+        <app-gear-form
+          [band]="band()!"
+          [saving]="saving()"
+          (submitForm)="onCreateSubmit($any($event))"
+          (cancel)="onCreateCancel()" />
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="loading-state">
+        <mat-spinner diameter="40" />
+        <span>Loading gear...</span>
+      </div>
+    } @else if (gear().length === 0) {
+      <div class="empty-state">
+        <p>No gear yet.</p>
+        <button mat-raised-button color="primary" (click)="showCreateForm.set(true)">Create your first band</button>
+      </div>
+    } @else {
+      <div class="band-grid">
+        @for (gearItem of gear(); track gearItem.id) {
+          <h2>{{ gearItem.name }}</h2>
+          <div>{{ gearItem.brand }}</div>
+          <div>{{ gearItem.model }}</div>
+          <div>{{ gearItem.type }}</div>
+          <!-- <app-band-card
+            [band]="band"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)" /> -->
+        }
+      </div>
+    }
+  }
+</div>

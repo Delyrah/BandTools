@@ -49,6 +49,11 @@ export class BandListPageComponent implements OnInit {
     }
   }
 
+  onSelect(id: number) {
+    console.log(id);
+    this.store.dispatch(BandActions.selectBand({ id }));
+  }
+
   onCreateSubmit(dto: CreateBandDto) {
     this.store.dispatch(BandActions.createBand({ dto }));
   }

@@ -34,6 +34,7 @@
       @for (band of bands(); track band.id) {
         <app-band-card
           [band]="band"
+          (select)="onSelect($event)"
           (edit)="onEdit($event)"
           (delete)="onDelete($event)" />
       }

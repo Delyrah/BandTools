@@ -22,4 +22,4 @@ export interface Gear {
 
 interface BaseGearDto extends Omit<Gear, 'id'> { }
 export interface CreateGearDto extends BaseGearDto { }
-export interface UpdateGearDto extends Partial<BaseGearDto> { }
+export interface UpdateGearDto extends Partial<Gear> { }

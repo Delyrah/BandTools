@@ -10,6 +10,7 @@ import { NotificationState } from './notification/notification.state';
 export interface AppState {
     albums: AlbumState;
     bands: BandState;
+    currentBand: Band | null;
     gear: GearState;
     notification: NotificationState;
     setlists: SetlistState;

@@ -15,4 +15,5 @@ export class BandCardComponent {
   band = input.required<Band>();
   edit = output<number>();
   delete = output<number>();
+  select = output<number>();
 }

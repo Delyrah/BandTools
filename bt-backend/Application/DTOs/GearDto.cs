@@ -16,7 +16,8 @@ public class GearDto
     public decimal? Value { get; set; }
     public string? PhotoUrl { get; set; }
     public string? Notes { get; set; }
-    public string? Weight { get; set; }
+    public decimal? Weight { get; set; }
+    public string? WeightUnit { get; set; }
     public string? Dimensions { get; set; }
 }
 
@@ -37,7 +38,8 @@ public class CreateGearDto
     public decimal? Value { get; set; }
     public string? PhotoUrl { get; set; }
     public string? Notes { get; set; }
-    public string? Weight { get; set; }
+    public decimal? Weight { get; set; }
+    public string? WeightUnit { get; set; }
     public string? Dimensions { get; set; }
 }
 
@@ -53,6 +55,7 @@ public class UpdateGearDto
     public decimal? Value { get; set; }
     public string? PhotoUrl { get; set; }
     public string? Notes { get; set; }
-    public string? Weight { get; set; }
+    public decimal? Weight { get; set; }
+    public string? WeightUnit { get; set; }
     public string? Dimensions { get; set; }
 }
