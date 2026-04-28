@@ -1,12 +1,16 @@
 import { Component, inject, input, output } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Band } from '../../../../core/models/band.model';
 import { CreateGearDto, Gear, UpdateGearDto } from '../../../../core/models/gear.model';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormInputComponent } from "../../../../shared/components/form/input/form-input.component";
 
 @Component({
   standalone: true,
   selector: 'app-gear-form',
-  imports: [],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormInputComponent],
   templateUrl: './gear-form.component.html',
   styleUrl: './gear-form.component.scss',
 })
@@ -22,7 +26,7 @@ export class GearFormComponent {
   isEditMode = false;
 
   form = this.fb.group({
-    ownerId: [null],
+    ownerId: [null as number | null],
     name: ['', Validators.required],
 
     type: [''],
@@ -34,19 +38,20 @@ export class GearFormComponent {
 
     notes: [''],
 
-    value: [0],
+    value: [null as number | null],
     valueCurrency: ['USD'],
-    weight: [0],
+    weight: [null as number | null],
     weightUnit: ['kg'],
     dimensions: [''],
   });
 
   ngOnInit() {
-    const existing = this.band();
+    const existing = this.gear();
     if (existing) {
       this.isEditMode = true;
       this.form.patchValue({
-        ...existing
+        ...existing,
+        ownerId: existing.ownerId ?? null
       });
     }
   }
@@ -60,9 +65,13 @@ export class GearFormComponent {
     const value = this.form.getRawValue();
 
     const dto: CreateGearDto | UpdateGearDto = {
+      ...value,
       bandId: this.band().id,
+      ownerId: undefined,
       value: value.value || 0,
       weight: value.weight || 0
     }
+
+    this.submitForm.emit(dto);
   }
 }

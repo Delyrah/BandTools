@@ -1,0 +1,34 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 class="form-title">{{ isEditMode ? 'Edit Gear' : 'New Gear' }}</h2>
+
+  <app-form-input [control]="form.controls.name" label="Name" placeholder="Gear name"></app-form-input>
+  
+  <hr>
+  
+  <app-form-input [control]="form.controls.type" label="Type" placeholder="Type"></app-form-input>
+  <app-form-input [control]="form.controls.brand" label="Brand" placeholder="Brand"></app-form-input>
+  <app-form-input [control]="form.controls.model" label="Model" placeholder="Model"></app-form-input>
+  <app-form-input [control]="form.controls.serialNumber" label="Serial Number" placeholder="Serial Number"></app-form-input>
+
+  <hr>
+
+  <app-form-input [control]="form.controls.notes" label="Notes" placeholder="Notes (e.g. what its used for etc.)"></app-form-input>
+
+  <hr>
+
+  <app-form-input [control]="form.controls.value" label="Value" placeholder="500"></app-form-input>
+  <app-form-input [control]="form.controls.valueCurrency" label="Currency" placeholder="EUR"></app-form-input>
+  
+  <hr>
+
+  <app-form-input [control]="form.controls.weight" label="Weight" placeholder="5"></app-form-input>
+  <app-form-input [control]="form.controls.weightUnit" label="Unit" placeholder="kg"></app-form-input>
+  <app-form-input [control]="form.controls.dimensions" label="Dimensions" placeholder="50cm x 50cm x 30cm"></app-form-input>
+
+  <div class="form-actions">
+    <button mat-stroked-button type="button" (click)="cancel.emit()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Saving...' : isEditMode ? 'Save Changes' : 'Create Gear' }}
+    </button>
+  </div>
+</form>

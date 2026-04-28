@@ -25,6 +25,20 @@ export class GearEffects {
         )
     )
 
+    loadAllGearForBand$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(GearActions.loadAllGearForBand),
+            switchMap(({ id }) =>
+                this.gearService.getAllForBand(id).pipe(
+                map(gear => GearActions.loadAllGearForBandSuccess({ gear })),
+                catchError(error => of(GearActions.loadAllGearForBandFailure({
+                    error: error.message ?? 'Failed to load gear for band'
+                })))
+                )
+            )
+        )
+    )
+
     loadGear$ = createEffect(() => 
         this.actions$.pipe(
             ofType(GearActions.loadGear),

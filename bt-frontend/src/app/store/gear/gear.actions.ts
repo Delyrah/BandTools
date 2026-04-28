@@ -8,6 +8,11 @@ export const GearActions = createActionGroup({
         'Load all Gear': emptyProps(),
         'Load all Gear Success': props<{ gear: Gear[] }>(),
         'Load all Gear Failure': props<{ error: string }>(),
+        
+        // Load all
+        'Load all Gear for Band': props<{ id: number }>(),
+        'Load all Gear for Band Success': props<{ gear: Gear[] }>(),
+        'Load all Gear for Band Failure': props<{ error: string }>(),
 
         // Load one
         'Load Gear': props<{ id: number }>(),

@@ -2,7 +2,7 @@ import { inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 export class EntityService<T, I = number> {
-    private http = inject(HttpClient);
+    protected http = inject(HttpClient);
 
     constructor(private apiPath: string) {
 

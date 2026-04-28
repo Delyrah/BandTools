@@ -1,5 +1,6 @@
 using BandTools.Infrastructure.Persistence;
 using BandTools.Infrastructure.Services;
+using BandTools.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IBandService, BandService>();
 builder.Services.AddScoped<ITrackService, TrackService>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<ISetlistService, SetlistService>();
+builder.Services.AddScoped<IGearService, GearService>();
 
 // DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -78,6 +80,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("BandToolsPolicy");
+app.UseMiddleware<RequestTimingMiddleware>();  // <-- add this
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

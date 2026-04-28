@@ -9,7 +9,6 @@ import { AuthService } from '../../core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { selectSelectedBand } from '../../store/band/band.selectors';
-import { NgStyle } from "../../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   standalone: true,
@@ -17,8 +16,7 @@ import { NgStyle } from "../../../../node_modules/@angular/common/types/_common_
   imports: [
     RouterOutlet, RouterLink, RouterLinkActive,
     MatSidenavModule, MatToolbarModule, MatNavList, MatListItem,
-    MatListItemIcon, MatListItemTitle, MatIconModule, MatButtonModule,
-    NgStyle
+    MatListItemIcon, MatListItemTitle, MatIconModule, MatButtonModule
 ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss'

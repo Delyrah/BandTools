@@ -1,0 +1,17 @@
+.form-title {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+hr {
+  margin: 0 0 1rem;
+  border: 0;
+  border-bottom: 1px solid #a4a4a4;
+}

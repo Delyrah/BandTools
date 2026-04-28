@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>{{ label() }}</mat-label>
+  <input matInput [formControl]="control()" [attr.placeholder]="placeholder()" [type]="type()" />
+  @if (control().hasError('required')) {
+    <mat-error>{{ label() }} is required</mat-error>
+  }
+  @if (control().hasError('maxlength')) {
+    <mat-error>{{ label() }} cannot exceed {{ control().getError('maxlength').requiredLength }} characters</mat-error>
+  }
+</mat-form-field>

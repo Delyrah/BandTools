@@ -5,10 +5,11 @@ import { GearActions } from '../../../../store/gear/gear.actions';
 import { selectAllGear, selectBandGear, selectError, selectLoading, selectSaving } from '../../../../store/gear/gear.selectors';
 import { Router } from '@angular/router';
 import { CreateGearDto } from '../../../../core/models/gear.model';
-import { GearFormComponent } from '../gear-form/gear-form.component';
+import { GearFormComponent } from '../../components/gear-form/gear-form.component';
 import { selectCurrentBand } from '../../../../store/app.selectors';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { selectSelectedBand } from '../../../../store/band/band.selectors';
 
 @Component({
   standalone: true,
@@ -21,7 +22,7 @@ export class GearListPageComponent {
   private store = inject(Store);
   private router = inject(Router);
 
-  band = toSignal(this.store.select(selectCurrentBand), { initialValue: null });
+  band = toSignal(this.store.select(selectSelectedBand), { initialValue: null });
 
   gear = toSignal(this.store.select(selectBandGear), { initialValue: [] });
   loading = toSignal(this.store.select(selectLoading), { initialValue: false });
@@ -31,7 +32,10 @@ export class GearListPageComponent {
   showCreateForm = signal(false);
 
   ngOnInit() {
-    this.store.dispatch(GearActions.loadAllGear());
+    const bandId = this.band()?.id;
+    if (bandId) {
+      this.store.dispatch(GearActions.loadAllGearForBand({ id: bandId }));
+    }
   }
 
   onEdit(id: number) {
